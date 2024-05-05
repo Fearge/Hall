@@ -10,7 +10,7 @@ assert (rate1 == rate2)
 x = x.mean(axis=1) if len(x.shape) > 1 else x
 h = h.mean(axis=1) if len(h.shape) > 1 else x
 
-# Falsung
+# Falsung.....
 
 y = signal.fftconvolve(x, h)
 
