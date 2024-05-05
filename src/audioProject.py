@@ -1,15 +1,25 @@
 import scipy.io.wavfile as wavfile
+
 from scipy import signal
+
 rate1, x = wavfile.read('spoken.wav')
 rate2, h = wavfile.read('big_hall.wav')
-assert(rate1 == rate2)
+
+assert (rate1 == rate2)
+
 x = x.mean(axis=1) if len(x.shape) > 1 else x
 h = h.mean(axis=1) if len(h.shape) > 1 else x
-#Falsung
+
+# Falsung
+
 y = signal.fftconvolve(x, h)
-#Skalierung auf +-32765 und umwandeln in Integer
+
+# Skalierung auf +-32765 und umwandeln in Integer
+
 y /= max(abs(y))
 y *= (2**15-1)
 y = y.astype('int16')
-#Ergebnis abspeichern
+
+# Ergebnis abspeichern
+
 wavfile.write('y.wav', rate1, y)
