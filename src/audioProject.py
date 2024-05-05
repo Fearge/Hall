@@ -2,10 +2,12 @@ import scipy.io.wavfile as wavfile
 from scipy import signal
 import sounddevice as sd
 
+#Todo: Fehlerbehandlung
 
 zuFaltendeDatei = ""
 impulsAntwort = ""
 
+#Todo: Redundanzen reduzieren, vlt files als Liste
 #files = {wavfile.read()}
 
 # Methode zum Falten
@@ -65,6 +67,8 @@ if __name__ == '__main__':
     elif (eingabe.upper() == "P"):
         zuFaltendeDatei = 'WiiShopChannelNoMeta.wav'
         impulsAntwort = 'big_hall.wav'
+
+    #Todo: abfragen wie ausgegeben werden soll
     ausgabe(1)
 
     """
