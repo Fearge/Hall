@@ -3,12 +3,12 @@ from scipy import signal
 import sounddevice as sd
 
 #Todo: Fehlerbehandlung
-
+globalRate = 44100
 zuFaltendeDatei = ""
 impulsAntwort = ""
+gefalteteDatei =""
 
 #Todo: Redundanzen reduzieren, vlt files als Liste
-#files = {wavfile.read()}
 
 # Methode zum Falten
 def convolve(file1, file2):
@@ -26,7 +26,8 @@ def convolve(file1, file2):
     gefaltet /= max(abs(gefaltet))
     gefaltet *= (2 ** 15 - 1)
     gefaltet = gefaltet.astype('int16')
-    return gefaltet, rate1
+    globalRate = rate1
+    return gefaltet
 
 # Metadaten der Datei ausgeben
 def showStats(file):
@@ -45,11 +46,10 @@ def showStats(file):
 
 # Ergebnis ausgeben, entweder auf Soundkarte oder als .wav
 def ausgabe(isSpeichern = True):
-    y, rate = convolve(zuFaltendeDatei, impulsAntwort)
     if(isSpeichern):
-        wavfile.write(input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".wav", rate, y)
+        wavfile.write(input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".wav", globalRate, gefalteteDatei)
     else:
-        sd.play(y,rate)
+        sd.play(gefalteteDatei,globalRate)
         input("Drücke irgendeine Taste, um den Sound anzuhalten")
         sd.stop()
 
