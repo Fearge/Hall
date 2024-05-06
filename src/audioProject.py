@@ -57,19 +57,29 @@ def ausgabe(isSpeichern = True):
 
 if __name__ == '__main__':
 
-    eingabe = input(
-        "Hallo :) Möchtest du eigene Dateien mit Hall belegen oder welche von unseren Presets nutzen? (P = Presets / E = Eigene) \nBitte Wahl eintippen: ")
+    eingabe = input("Hallo :) Möchtest du eigene Dateien mit Hall belegen oder welche von unseren Presets nutzen? (P = Presets / E = Eigene) \nBitte Wahl eintippen: ")
 
     if (eingabe.upper() == "E"):
         zuFaltendeDatei = input("Geben Sie den Pfad für die zu faltende Datei an: ")
         impulsAntwort = input("Geben Sie den Pfad für die Impulsantwort an: ")
 
     elif (eingabe.upper() == "P"):
-        zuFaltendeDatei = 'WiiShopChannelNoMeta.wav'
+        zuFaltendeDatei = 'WiiShopChannel.wav'
         impulsAntwort = 'big_hall.wav'
 
     #Todo: abfragen wie ausgegeben werden soll
-    ausgabe(1)
+
+    gefalteteDatei = convolve(zuFaltendeDatei, impulsAntwort)
+
+    eingabe = (input("Möchtest Du die Datei speichern oder über dein Ausgabegerät abspielen? (S = Speichern / A = Ausgabe) \nBitte Wahl eintippen: "))
+
+    if (eingabe.upper() == "S"):
+        ausgabe(1)
+
+    elif (eingabe.upper() == "A"):
+        ausgabe(0)
+
+
 
     """
     else:
