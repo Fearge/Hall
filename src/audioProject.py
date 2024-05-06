@@ -1,6 +1,8 @@
 import scipy.io.wavfile as wavfile
 from scipy import signal
+
 import sounddevice as sd
+import functions
 
 #Todo: Fehlerbehandlung
 sampleRate = 44100
@@ -19,6 +21,7 @@ def convolve(file1, file2):
 
     assert (rate1 == rate2)
 
+    # Umwandlung in Mono
     x = x.mean(axis=1) if len(x.shape) > 1 else x
     h = h.mean(axis=1) if len(h.shape) > 1 else h
 
@@ -26,10 +29,8 @@ def convolve(file1, file2):
     gefaltet = signal.fftconvolve(x, h)
 
     # Skalierung auf +-32765 und umwandeln in Integer
-    gefaltet /= max(abs(gefaltet))
-    gefaltet *= (2 ** 15 - 1)
-    gefaltet = gefaltet.astype('int16')
-    return gefaltet, rate1
+    normalizeGefaltet = functions.normalize(gefaltet)
+    return normalizeGefaltet, rate1
 
 # Metadaten der Datei ausgeben
 def showStats(file):
@@ -67,7 +68,7 @@ if __name__ == '__main__':
         impulsAntwort = input("Geben Sie den Pfad für die Impulsantwort an: ")
 
     elif (eingabe.upper() == "P"):
-        zuFaltendeDatei = 'spoken.wav'
+        zuFaltendeDatei = 'WiiShopChannel.wav'
         impulsAntwort = 'big_hall.wav'
 
     #Todo: abfragen wie ausgegeben werden soll
