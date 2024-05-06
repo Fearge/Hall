@@ -3,12 +3,14 @@ from scipy import signal
 import sounddevice as sd
 
 #Todo: Fehlerbehandlung
-globalRate = 44100
+sampleRate = 44100
 zuFaltendeDatei = ""
 impulsAntwort = ""
 gefalteteDatei =""
 
 #Todo: Redundanzen reduzieren, vlt files als Liste
+
+
 
 # Methode zum Falten
 def convolve(file1, file2):
@@ -16,6 +18,7 @@ def convolve(file1, file2):
     rate2, h = wavfile.read(file2)
 
     assert (rate1 == rate2)
+
     x = x.mean(axis=1) if len(x.shape) > 1 else x
     h = h.mean(axis=1) if len(h.shape) > 1 else h
 
@@ -26,8 +29,7 @@ def convolve(file1, file2):
     gefaltet /= max(abs(gefaltet))
     gefaltet *= (2 ** 15 - 1)
     gefaltet = gefaltet.astype('int16')
-    globalRate = rate1
-    return gefaltet
+    return gefaltet, rate1
 
 # Metadaten der Datei ausgeben
 def showStats(file):
@@ -45,15 +47,16 @@ def showStats(file):
     print(data[:4])
 
 # Ergebnis ausgeben, entweder auf Soundkarte oder als .wav
-def ausgabe(fileToPrint,rateToPrint,isSpeichern = True):
+def ausgabe(fileToPrint,rateToPrint,isSpeichern):
+    # als .wav
     if(isSpeichern):
         wavfile.write(input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".wav", rateToPrint, fileToPrint)
     else:
         sd.play(fileToPrint,rateToPrint)
-        input("Drücke irgendeine Taste, um den Sound anzuhalten")
+        input("Drücke die Eingabetaste, um den Sound anzuhalten")
         sd.stop()
 
-#showStats(impulsAntwort)
+
 
 if __name__ == '__main__':
 
@@ -64,20 +67,20 @@ if __name__ == '__main__':
         impulsAntwort = input("Geben Sie den Pfad für die Impulsantwort an: ")
 
     elif (eingabe.upper() == "P"):
-        zuFaltendeDatei = 'WiiShopChannel.wav'
+        zuFaltendeDatei = 'spoken.wav'
         impulsAntwort = 'big_hall.wav'
 
     #Todo: abfragen wie ausgegeben werden soll
 
-    gefalteteDatei = convolve(zuFaltendeDatei, impulsAntwort)
+    gefalteteDatei, sampleRate = convolve(zuFaltendeDatei, impulsAntwort)
 
     eingabe = (input("Möchtest Du die Datei speichern oder über dein Ausgabegerät abspielen? (S = Speichern / A = Ausgabe) \nBitte Wahl eintippen: "))
 
     if (eingabe.upper() == "S"):
-        ausgabe(1)
+        ausgabe(gefalteteDatei, sampleRate, 1)
 
     elif (eingabe.upper() == "A"):
-        ausgabe(0)
+        ausgabe(gefalteteDatei, sampleRate, 0)
 
 
 
