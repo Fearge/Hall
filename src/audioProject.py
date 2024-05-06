@@ -17,7 +17,7 @@ def convolve(file1, file2):
 
     assert (rate1 == rate2)
     x = x.mean(axis=1) if len(x.shape) > 1 else x
-    h = h.mean(axis=1) if len(h.shape) > 1 else x
+    h = h.mean(axis=1) if len(h.shape) > 1 else h
 
     # Faltung
     gefaltet = signal.fftconvolve(x, h)
@@ -45,11 +45,11 @@ def showStats(file):
     print(data[:4])
 
 # Ergebnis ausgeben, entweder auf Soundkarte oder als .wav
-def ausgabe(isSpeichern = True):
+def ausgabe(fileToPrint,rateToPrint,isSpeichern = True):
     if(isSpeichern):
-        wavfile.write(input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".wav", globalRate, gefalteteDatei)
+        wavfile.write(input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".wav", rateToPrint, fileToPrint)
     else:
-        sd.play(gefalteteDatei,globalRate)
+        sd.play(fileToPrint,rateToPrint)
         input("Drücke irgendeine Taste, um den Sound anzuhalten")
         sd.stop()
 
