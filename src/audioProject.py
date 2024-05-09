@@ -15,6 +15,7 @@ if __name__ == '__main__':
 
         print("Wähle eine Datei aus, auf die Hall gelegt werden soll")
         zuFaltendeDatei = functions.select_file()
+        zuFaltendeDatei = functions.setUp(zuFaltendeDatei)
 
         eingabe = input("Möchtest du eine eigene Impulsantwort nutzen oder das bereits vorhandene Preset? (P = Presets / E = Eigene) \nBitte Wahl eintippen: ")
 
@@ -25,10 +26,11 @@ if __name__ == '__main__':
         elif (eingabe.upper() == "P"):
             eingabe = input("Wähle ein Preset. Preset 1 (classroom.wav) = 1, Preset 2 (big_hall.wav) = 2 \nBitte Wahl eintippen: ")
 
-            if(eingabe == 1):
+            if(eingabe == "1"):
                 impulsAntwort = 'classroom.wav'
+                impulsAntwort = functions.setUp(impulsAntwort)
 
-            elif(eingabe == 2):
+            elif(eingabe == "2"):
                 impulsAntwort = 'big_hall.wav'
 
     elif (eingabe.upper() == "P"):
@@ -37,17 +39,17 @@ if __name__ == '__main__':
 
     #Todo: abfragen wie ausgegeben werden soll
     #Faltung
-    gefalteteDatei, sampleRate = functions.convolve(zuFaltendeDatei, impulsAntwort)
+    gefalteteDatei = functions.convolve(zuFaltendeDatei, impulsAntwort)
 
     eingabe = ()
 
     eingabe = (input("Möchtest Du die Datei speichern oder über dein Ausgabegerät abspielen? (S = Speichern / A = Ausgabe) \nBitte Wahl eintippen: "))
 
     if (eingabe.upper() == "S"):
-        functions.ausgabe(gefalteteDatei, sampleRate, 1)
+        functions.ausgabe(1,gefalteteDatei)
 
     elif (eingabe.upper() == "A"):
-        functions.ausgabe(gefalteteDatei, sampleRate, 0)
+        functions.ausgabe(0,gefalteteDatei)
 
 
 
