@@ -9,7 +9,7 @@ import functions
 sampleRate = 44100
 zuFaltendeDatei = ""
 impulsAntwort = ""
-gefalteteDatei =""
+gefalteteDatei = ""
 
 if __name__ == '__main__':
 
