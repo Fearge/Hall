@@ -1,5 +1,6 @@
 #eigene Funktionen
 import functions
+import file
 
 #Todo: Fehlerbehandlung
 sampleRate = 44100
@@ -41,15 +42,13 @@ if __name__ == '__main__':
     #Faltung
     gefalteteDatei = functions.convolve(zuFaltendeDatei, impulsAntwort)
 
-    eingabe = ()
-
     eingabe = (input("Möchtest Du die Datei speichern oder über dein Ausgabegerät abspielen? (S = Speichern / A = Ausgabe) \nBitte Wahl eintippen: "))
 
     if (eingabe.upper() == "S"):
-        functions.ausgabe(1,gefalteteDatei)
+        functions.ausgabe(gefalteteDatei,1)
 
     elif (eingabe.upper() == "A"):
-        functions.ausgabe(0,gefalteteDatei)
+        functions.ausgabe(gefalteteDatei,0)
 
 
 

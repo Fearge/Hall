@@ -19,8 +19,7 @@ def setUp(wav):
 
 
 # Methode zum Falten
-def convolve(file1=file.File(),
-             file2=file.File()):
+def convolve(file1, file2):
 
     assert (file1.rate == file2.rate)
 
@@ -31,30 +30,22 @@ def convolve(file1=file.File(),
     # Faltung
     gefaltet = signal.fftconvolve(file1.content, file2.content)
 
-    # Skalierung auf +-32765 und umwandeln in Integer / Normalisieren
-    normalizeGefaltet = normalize(gefaltet)
-    return file.File(file1.rate, normalizeGefaltet)
+    gefaltet = file.File(file1.rate, gefaltet)
+    gefaltet.normalize()
+    return gefaltet
 
 
 # Ergebnis ausgeben, entweder auf Soundkarte oder als .wav Datei
-def ausgabe(isSpeichern, fileOut = file.File()):
+def ausgabe( fileOut,isSpeichern):
     # als .wav
     if (isSpeichern):
-        wavfile.write(input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".wav", fileOut.content,
-                      fileOut.rate)
+        wavfile.write(input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".wav", fileOut.rate,
+                      fileOut.content)
     else:
         #Auf Soundkarte
         sd.play(fileOut.content, fileOut.rate)
         input("Drücke die Eingabetaste, um den Sound anzuhalten")
         sd.stop()
-
-
-def normalize(amp_list):
-    amp_list /= max(abs(amp_list))
-    amp_list *= (2 ** 15 - 1)
-    amp_list = amp_list.astype('int16')
-    return amp_list
-
 
 def select_file():
     file = filedialog.askopenfilename()
