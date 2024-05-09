@@ -39,8 +39,14 @@ if __name__ == '__main__':
     #Faltung
     gefalteteDatei, sampleRate = functions.convolve(zuFaltendeDatei, impulsAntwort)
 
-    eingabe = ()
+    #Stats
+    eingabe = input("Möchtest du dir die Stats zu der zu faltenden Datei anzeigen lassen? (J = Ja / N = Nein) \nBitte Wahl eintippen: ")
+    if (eingabe.upper() == "J"):
+        functions.showStats(zuFaltendeDatei)
+    else:
+        pass
 
+    #Ausgabe
     eingabe = (input("Möchtest Du die Datei speichern oder über dein Ausgabegerät abspielen? (S = Speichern / A = Ausgabe) \nBitte Wahl eintippen: "))
 
     if (eingabe.upper() == "S"):
