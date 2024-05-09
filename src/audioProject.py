@@ -1,9 +1,5 @@
-
-#Library für Auswahl von Datei über Explorer
-
 #eigene Funktionen
 import functions
-
 
 #Todo: Fehlerbehandlung
 sampleRate = 44100
@@ -18,8 +14,6 @@ if __name__ == '__main__':
     if (eingabe.upper() == "E"):
         print("Wähle eine Datei aus, auf die Hall gelegt werden soll")
         zuFaltendeDatei = functions.select_file()
-        zuFaltendeDatei.replace('/','"\\"')
-        print(zuFaltendeDatei)
         eingabe = input("Möchtest du eine eigene Impulsantwort nutzen oder die bereits vorhandene (big_hall)? (P = Presets / E = Eigene)")
 
         if(eingabe.upper()=="E"):
