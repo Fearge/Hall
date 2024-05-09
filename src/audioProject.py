@@ -1,9 +1,5 @@
-
-#Library für Auswahl von Datei über Explorer
-
 #eigene Funktionen
 import functions
-
 
 #Todo: Fehlerbehandlung
 sampleRate = 44100

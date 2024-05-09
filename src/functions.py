@@ -1,3 +1,5 @@
+#os für verschiedenes
+import os
 #Library für Faltung
 import scipy.io.wavfile as wavfile
 from scipy import signal
@@ -43,7 +45,6 @@ def normalize(amp_list):
 
 def select_file():
     file = filedialog.askopenfilename()
-    print(file)
     return file
 
 # Metadaten der Datei ausgeben
