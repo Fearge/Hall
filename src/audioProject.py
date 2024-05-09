@@ -16,6 +16,7 @@ if __name__ == '__main__':
     eingabe = input("Möchtest Du eine eigene Datei mit Hall versehen oder das bereits vorhandene Preset nutzen? (P = Presets / E = Eigene) \nBitte Wahl eintippen: ")
 
     if (eingabe.upper() == "E"):
+
         print("Wähle eine Datei aus, auf die Hall gelegt werden soll")
         zuFaltendeDatei = functions.select_file()
 
