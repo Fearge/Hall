@@ -23,6 +23,10 @@ if __name__ == '__main__':
                     zuFaltendeDatei = functions.select_file()
                 except FileNotFoundError:
                     print("Datei konnte nicht gefunden werden!")
+                except ValueError:
+                    print("Datei ist nicht .wav!")
+                except:
+                    print("Da ist was schiefgelaufen, versuch es nochmal!")
 
             eingabe_hall = ""
             while eingabe_hall.upper()!= "E" and eingabe_hall.upper()!= "P":
@@ -36,6 +40,10 @@ if __name__ == '__main__':
                         impulsAntwort = functions.select_file()
                     except FileNotFoundError:
                         print("Datei konnte nicht gefunden werden!")
+                    except ValueError:
+                        print("Datei ist nicht .wav!")
+                    except:
+                        print("Da ist was schiefgelaufen, versuch es nochmal!")
 
                 elif eingabe_hall.upper() == "P":
                     eingabe_preset = 0
