@@ -1,13 +1,12 @@
 #os für verschiedenes
-import os
 #Library für Faltung
 import scipy.io.wavfile as wavfile
 from scipy import signal
-#Library für Abspielen auf Soundcarte
+#Library für Abspielen auf Soundkarte
 import sounddevice as sd
 #Library für Auswahl von Datei über Explorer
-import tkinter as tk
 from tkinter import filedialog
+
 
 # Methode zum Falten
 def convolve(file1, file2):
@@ -15,7 +14,6 @@ def convolve(file1, file2):
     rate2, h = wavfile.read(file2)
 
     assert (rate1 == rate2)
-
     # Umwandlung in Mono
     x = x.mean(axis=1) if len(x.shape) > 1 else x
     h = h.mean(axis=1) if len(h.shape) > 1 else h
@@ -24,18 +22,21 @@ def convolve(file1, file2):
     gefaltet = signal.fftconvolve(x, h)
 
     # Skalierung auf +-32765 und umwandeln in Integer
-    normalizeGefaltet = normalize(gefaltet)
-    return normalizeGefaltet, rate1
+    normalize_gefaltet = normalize(gefaltet)
+    return normalize_gefaltet, rate1
+
 
 # Ergebnis ausgeben, entweder auf Soundkarte oder als .wav
-def ausgabe(fileToPrint,rateToPrint,isSpeichern):
+def ausgabe(file_to_print, rate_to_print, is_speichern):
     # als .wav
-    if(isSpeichern):
-        wavfile.write(input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".wav", rateToPrint, fileToPrint)
+    if is_speichern:
+        wavfile.write(input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".wav", rate_to_print,
+                      file_to_print)
     else:
-        sd.play(fileToPrint,rateToPrint)
+        sd.play(file_to_print, rate_to_print)
         input("Drücke die Eingabetaste, um den Sound anzuhalten")
         sd.stop()
+
 
 def normalize(amp_list):
     amp_list /= max(abs(amp_list))
@@ -43,13 +44,14 @@ def normalize(amp_list):
     amp_list = amp_list.astype('int16')
     return amp_list
 
+
 def select_file():
     file = filedialog.askopenfilename()
     return file
 
-# Metadaten der Datei ausgeben
-def showStats(file):
 
+# Metadaten der Datei ausgeben
+def show_stats(file):
     rate, data = wavfile.read(file)
     N = data.shape[0]
     CHN = data.shape[1] if len(data.shape) == 2 else 1
