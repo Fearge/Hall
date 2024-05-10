@@ -1,6 +1,8 @@
 # Convolution-Hall
 Ein kleines Hallprogramm, welches per Faltung einen Hall simuliert, geschrieben in Python.
 
+https://github.com/Fearge/Hall
+
 +------------------------------------------------------------------------------------------------------------------------------+          
 Die Steuerung des Programms läuft über die Konsole und Eingaben in diese.
 Per einfacher Buchstabeneingabe kann eine vordefinierte Audiodatei mit vordefinierten Impulsantworten gefaltet werden. 									   
