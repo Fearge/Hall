@@ -16,9 +16,11 @@ class File:
         self.content = self.content.astype('int16')
 
     def showStats(self):
+
         rate = self.rate
         data = self.content
         name = self.name
+
         N = data.shape[0]
         CHN = data.shape[1] if len(data.shape) == 2 else 1
         print(f"+----------------------------------------+")
