@@ -69,7 +69,10 @@ if __name__ == '__main__':
             print("Sie haben keinen gültigen Buchstaben eingegeben!")
 
     #Faltung
-    gefalteteDatei, sampleRate = functions.convolve(zuFaltendeDatei, impulsAntwort)
+    try:
+        gefalteteDatei, sampleRate = functions.convolve(zuFaltendeDatei, impulsAntwort)
+    except ValueError:
+        print("Datei ist nicht .wav")
 
     #Stats
     eingabe_stats = ""
