@@ -1,97 +1,130 @@
 #eigene Funktionen
 import functions
+#File Klasse
+import file as file
 
-sampleRate = 44100
+#Dateien
 zuFaltendeDatei = ""
 impulsAntwort = ""
 gefalteteDatei = ""
 
+#Flags
+eingabeFlag = ""
+
+
+
 if __name__ == '__main__':
 
-    eingabe_datei1 = ""
-
-    while eingabe_datei1.upper() != "E" and eingabe_datei1.upper() != "P":
-        eingabe_datei1 = input(
+    while eingabeFlag.upper() != "E" and eingabeFlag.upper() != "P":
+        eingabeFlag = input(
             "Möchtest Du eine eigene Datei mit Hall versehen oder das bereits vorhandene Preset nutzen? "
             "(P = Presets / E = Eigene)\nBitte Wahl eintippen: ")
 
-        if eingabe_datei1.upper() == "E":
-            while zuFaltendeDatei == "":
+        # Auswahl der Datei
+        if eingabeFlag.upper() == "E":
 
-                print("Wähle eine Datei aus, auf die Hall gelegt werden soll")
-                try:
-                    zuFaltendeDatei = functions.select_file()
-                except FileNotFoundError:
-                    print("Datei konnte nicht gefunden werden!")
+            print("Wähle eine Datei aus, auf die Hall gelegt werden soll")
+            try:
+                zuFaltendeDatei = file.setUp(functions.select_file())
+                eingabeFlag = ""
+            except FileNotFoundError:
+                print("Datei konnte nicht gefunden werden!")
+            except ValueError:
+                print("Datei Format ist nicht .wav!")
+            except:
+                print("Das lief schief! Versuch es noch mal, vielleicht mit einer anderen Datei!")
 
-            eingabe_hall = ""
-            while eingabe_hall.upper()!= "E" and eingabe_hall.upper()!= "P":
-                eingabe_hall = input(
+            # Auswahl ob Preset-Hall oder eigener
+            while eingabeFlag.upper() != "E" and eingabeFlag.upper() != "P":
+                eingabeFlag = input(
                     "Möchtest du eine eigene Impulsantwort nutzen oder das bereits vorhandene Preset? "
                     "(P = Presets / E = Eigene) \nBitte Wahl eintippen: ")
 
-                if eingabe_hall.upper() == "E":
+                # Eigene IR
+                if eingabeFlag.upper() == "E":
                     print("Wähle eine Datei für die Impulsantwort aus")
                     try:
-                        impulsAntwort = functions.select_file()
+                        impulsAntwort = file.setUp(functions.select_file())
+                        eingabeFlag = ""
                     except FileNotFoundError:
                         print("Datei konnte nicht gefunden werden!")
+                    except ValueError:
+                        print("Datei Format ist nicht .wav!")
+                    except:
+                        print("Das lief schief! Versuch es noch mal, vielleicht mit einer anderen Datei!")
 
-                elif eingabe_hall.upper() == "P":
-                    eingabe_preset = 0
-                    while eingabe_preset != "1" and eingabe_preset != "2":
-                        eingabe_preset = input(
+                # Preset IR
+                elif eingabeFlag.upper() == "P":
+
+                    # Auswahl zwischen Presets
+                    while eingabeFlag != "1" and eingabeFlag != "2":
+                        eingabeFlag = input(
                             "Wähle ein Preset. Preset 1 (classroom.wav) = 1, Preset 2 (big_hall.wav) = 2 "
                             "\nBitte Wahl eintippen: ")
 
-                        if eingabe_preset == "1":
-                            impulsAntwort = 'classroom.wav'
-                        elif eingabe_preset == "2":
-                            impulsAntwort = 'big_hall.wav'
+                        if eingabeFlag == "1":
+                            impulsAntwort = file.setUp('classroom.wav')
+                            eingabeFlag = ""
+                        elif eingabeFlag == "2":
+                            impulsAntwort = file.setUp('big_hall.wav')
+                            eingabeFlag = ""
                         else:
                             print("Sie haben keine gültige Zahl eingegeben!")
-
                 else:
                     print("Sie haben keinen gültigen Buchstaben eingegeben!")
 
-        elif eingabe_datei1.upper() == "P":
-            zuFaltendeDatei = 'WiiShopChannel.wav'
-            impulsAntwort = 'big_hall.wav'
+        # Preset für showcase, feste Datei & IR
+        elif eingabeFlag.upper() == "P":
+            zuFaltendeDatei = file.setUp('WiiShopChannel.wav')
+            impulsAntwort = file.setUp('big_hall.wav')
+            eingabeFlag = ""
         else:
             print("Sie haben keinen gültigen Buchstaben eingegeben!")
 
-    #Faltung
-    gefalteteDatei, sampleRate = functions.convolve(zuFaltendeDatei, impulsAntwort)
+    # Faltung soll mit 2 Mono Dateien geschehen
+    zuFaltendeDatei.makeMono()
+    impulsAntwort.makeMono()
 
-    #Stats
-    eingabe_stats = ""
-    while eingabe_stats.upper() != "J" and eingabe_stats.upper() != "N":
-        eingabe_stats = input(
+    # Faltung
+    gefalteteDatei = functions.convolve(zuFaltendeDatei, impulsAntwort)
+
+    # Normalisierung für Ausgabe, ansonsten verzerrt es
+    gefalteteDatei.normalize()
+
+    # Stats
+    while eingabeFlag.upper() != "J" and eingabeFlag.upper() != "N":
+        eingabeFlag = input(
             "Möchtest du dir die Stats zu der zu faltenden Datei anzeigen lassen? "
             "(J = Ja / N = Nein) \nBitte Wahl eintippen: ")
-        if eingabe_stats.upper() == "J":
-            functions.show_stats(zuFaltendeDatei)
-        elif eingabe_stats.upper() == "N":
+        if eingabeFlag.upper() == "J":
+            zuFaltendeDatei.showStats()
+            eingabeFlag = ""
+        elif eingabeFlag.upper() == "N":
+            eingabeFlag = ""
             pass
         else:
             print("Sie haben keinen gültigen Buchstaben eingegeben!")
 
-    #Ausgabe
-    eingabe_ausgabe = ""
-    while eingabe_ausgabe.upper() != "S" and eingabe_ausgabe.upper() != "A":
-        eingabe_ausgabe = (input(
+    # Ausgabe, entweder als .wav Datei oder über Soundkarte
+
+    while eingabeFlag.upper() != "S" and eingabeFlag.upper() != "A":
+        eingabeFlag = (input(
             "Möchtest Du die Datei speichern oder über dein Ausgabegerät abspielen? "
             "(S = Speichern / A = Ausgabe) \nBitte Wahl eintippen: "))
 
-        if eingabe_ausgabe.upper() == "S":
+        # als .wav gespeichert
+        if eingabeFlag.upper() == "S":
             try:
-                functions.ausgabe(gefalteteDatei, sampleRate, 1)
+                functions.ausgabe(gefalteteDatei, 1)
+                eingabeFlag = ""
             except:
                 print("Datei konnte nicht gespeichert werden!")
 
-        elif eingabe_ausgabe.upper() == "A":
+        # über Soundkarte
+        elif eingabeFlag.upper() == "A":
             try:
-                functions.ausgabe(gefalteteDatei, sampleRate, 0)
+                functions.ausgabe(gefalteteDatei, 0)
+                eingabeFlag = ""
             except:
                 print("Datei konnte nicht abgespielt werden!")
         else:

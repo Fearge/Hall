@@ -41,17 +41,5 @@ def select_file():
 
 
 # Metadaten der Datei ausgeben
-def showStats(file):
-    rate = file.rate
-    data = file.content
-    N = data.shape[0]
-    CHN = data.shape[1] if len(data.shape) == 2 else 1
-    print(f"+----------------------------------------+")
-    print(f"Audiodatei {file.name} mit Abtastrate {rate}Hz")
-    print(f"Anzahl der Abtastwerte in der Datei: {N}")
-    print(f"Anzahl der Audio-Kanäle (1=Mono, 2=Stereo): {CHN}")
-    print(f"Dauer: {N / rate:.3f}s")
-    print("Die ersten Vier Abtastwerte:")
-    print(data[:4])
-    print(f"+----------------------------------------+")
+
 
