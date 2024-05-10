@@ -2,8 +2,6 @@
 import functions
 import file
 
-#Todo: Fehlerbehandlung
-sampleRate = 44100
 zuFaltendeDatei = ""
 impulsAntwort = ""
 gefalteteDatei = ""
@@ -16,7 +14,7 @@ if __name__ == '__main__':
 
         print("Wähle eine Datei aus, auf die Hall gelegt werden soll")
         zuFaltendeDatei = functions.select_file()
-        zuFaltendeDatei = functions.setUp(zuFaltendeDatei)
+        zuFaltendeDatei = file.setUp(zuFaltendeDatei)
 
         eingabe = input("Möchtest du eine eigene Impulsantwort nutzen oder das bereits vorhandene Preset? (P = Presets / E = Eigene) \nBitte Wahl eintippen: ")
 
@@ -28,10 +26,10 @@ if __name__ == '__main__':
             eingabe = input("Wähle ein Preset. Preset 1 (classroom.wav) = 1, Preset 2 (big_hall.wav) = 2 \nBitte Wahl eintippen: ")
 
             if(eingabe == "1"):
-                impulsAntwort = functions.setUp('classroom.wav')
+                impulsAntwort = file.setUp('classroom.wav')
 
             elif(eingabe == "2"):
-                impulsAntwort = functions.setUp('big_hall.wav')
+                impulsAntwort = file.setUp('big_hall.wav')
 
     elif (eingabe.upper() == "P"):
         zuFaltendeDatei = 'WiiShopChannel.wav'
@@ -45,6 +43,15 @@ if __name__ == '__main__':
     # normalisieren für Ausgabe
     gefalteteDatei.normalize()
 
+    # Stats
+    eingabe = input(
+        "Möchtest du dir die Stats zu der zu faltenden Datei anzeigen lassen? (J = Ja / N = Nein) \nBitte Wahl eintippen: ")
+    if (eingabe.upper() == "J"):
+        functions.showStats(zuFaltendeDatei)
+    else:
+        pass
+
+    #Ausgabe
     eingabe = (input("Möchtest Du die Datei speichern oder über dein Ausgabegerät abspielen? (S = Speichern / A = Ausgabe) \nBitte Wahl eintippen: "))
 
     if (eingabe.upper() == "S"):

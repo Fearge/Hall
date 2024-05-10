@@ -12,10 +12,6 @@ from tkinter import filedialog
 import file
 
 
-def setUp(wav):
-    rate, content = wavfile.read(wav)
-    return file.File(rate, content)
-
 # Methode zum Falten
 def convolve(file1, file2):
     assert (file1.rate == file2.rate)
@@ -23,7 +19,7 @@ def convolve(file1, file2):
     # Faltung
     gefaltet = signal.fftconvolve(file1.content, file2.content)
 
-    gefaltet = file.File(file1.rate, gefaltet)
+    gefaltet = file.File(file1.rate, gefaltet,file1.name + '_gefaltet')
     return gefaltet
 
 
@@ -50,10 +46,12 @@ def showStats(file):
     data = file.content
     N = data.shape[0]
     CHN = data.shape[1] if len(data.shape) == 2 else 1
-
-    print(f"Audiodatei {file} mit Abtastrate {rate}Hz")
+    print(f"+----------------------------------------+")
+    print(f"Audiodatei {file.name} mit Abtastrate {rate}Hz")
     print(f"Anzahl der Abtastwerte in der Datei: {N}")
     print(f"Anzahl der Audio-Kanäle (1=Mono, 2=Stereo): {CHN}")
     print(f"Dauer: {N / rate:.3f}s")
     print("Die ersten Vier Abtastwerte:")
     print(data[:4])
+    print(f"+----------------------------------------+")
+
