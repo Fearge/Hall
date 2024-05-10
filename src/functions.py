@@ -13,18 +13,12 @@ import file
 
 
 def setUp(wav):
-    fileBack = file.File()
-    fileBack.rate, fileBack.content = wavfile.read(wav)
-    return fileBack
-
+    rate, content = wavfile.read(wav)
+    return file.File(rate, content)
 
 # Methode zum Falten
 def convolve(file1, file2):
     assert (file1.rate == file2.rate)
-
-    # Umwandlung in Mono
-    file1.makeMono()
-    file2.makeMono()
 
     # Faltung
     gefaltet = signal.fftconvolve(file1.content, file2.content)
@@ -52,7 +46,8 @@ def select_file():
 
 # Metadaten der Datei ausgeben
 def showStats(file):
-    rate, data = wavfile.read(file)
+    rate = file.rate
+    data = file.content
     N = data.shape[0]
     CHN = data.shape[1] if len(data.shape) == 2 else 1
 
