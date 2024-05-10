@@ -92,7 +92,7 @@ if __name__ == '__main__':
                 else:
                     print("Sie haben keinen gültigen Buchstaben eingegeben!\nVersuch es noch einmal\n+----------------------------------+")
 
-    # Faltung soll mit 2 Mono Dateien geschehen
+    # Faltung mit 2 Mono Dateien
     zuFaltendeDatei.makeMono()
     impulsAntwort.makeMono()
 
