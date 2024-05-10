@@ -9,7 +9,6 @@ impulsAntwort = ""
 gefalteteDatei = ""
 
 #Flags
-eingabeDatei = ""
 eingabeIR = ""
 eingabeHall = ""
 eingabeShow = ""
@@ -18,7 +17,7 @@ eingabeAusgabe = ""
 
 
 if __name__ == '__main__':
-
+    eingabeDatei = ""
 
     while eingabeDatei.upper() != "E" and eingabeDatei.upper() != "P":
         eingabeDatei = input(
@@ -34,10 +33,13 @@ if __name__ == '__main__':
 
             except FileNotFoundError:
                 print("Datei konnte nicht gefunden werden!")
+                break
             except ValueError:
                 print("Datei Format ist nicht .wav!")
+                break
             except:
                 print("Das lief schief! Versuch es noch mal, vielleicht mit einer anderen Datei!")
+                break
 
 
             # Auswahl ob Preset-Hall oder eigener
@@ -55,8 +57,10 @@ if __name__ == '__main__':
                         impulsAntwort = file.setUp(functions.select_file())
                     except FileNotFoundError:
                         print("Datei konnte nicht gefunden werden!")
+                        break
                     except ValueError:
                         print("Datei Format ist nicht .wav!")
+                        break
                     except:
                         print("Das lief schief! Versuch es noch mal, vielleicht mit einer anderen Datei!")
 
@@ -79,7 +83,7 @@ if __name__ == '__main__':
                 else:
                     print("Sie haben keinen gültigen Buchstaben eingegeben!")
 
-        # Preset für showcase, feste Datei & IR
+                # Preset für showcase, feste Datei & IR
         elif eingabeDatei.upper() == "P":
             zuFaltendeDatei = file.setUp('WiiShopChannel.wav')
             impulsAntwort = file.setUp('big_hall.wav')
