@@ -41,6 +41,7 @@ if __name__ == '__main__':
     #Todo: abfragen wie ausgegeben werden soll
     #Faltung
     gefalteteDatei = functions.convolve(zuFaltendeDatei, impulsAntwort)
+    gefalteteDatei.normalize()
 
     eingabe = (input("Möchtest Du die Datei speichern oder über dein Ausgabegerät abspielen? (S = Speichern / A = Ausgabe) \nBitte Wahl eintippen: "))
 

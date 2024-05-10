@@ -20,7 +20,6 @@ def setUp(wav):
 
 # Methode zum Falten
 def convolve(file1, file2):
-
     assert (file1.rate == file2.rate)
 
     # Umwandlung in Mono
@@ -31,12 +30,11 @@ def convolve(file1, file2):
     gefaltet = signal.fftconvolve(file1.content, file2.content)
 
     gefaltet = file.File(file1.rate, gefaltet)
-    gefaltet.normalize()
     return gefaltet
 
 
 # Ergebnis ausgeben, entweder auf Soundkarte oder als .wav Datei
-def ausgabe( fileOut,isSpeichern):
+def ausgabe(fileOut, isSpeichern):
     # als .wav
     if (isSpeichern):
         wavfile.write(input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".wav", fileOut.rate,
