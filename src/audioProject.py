@@ -15,7 +15,6 @@ eingabeShow = ""
 eingabeAusgabe = ""
 
 
-
 if __name__ == '__main__':
     eingabeDatei = ""
 
@@ -33,15 +32,24 @@ if __name__ == '__main__':
 
             except FileNotFoundError:
                 print("Datei konnte nicht gefunden werden!")
-                break
+                eingabeDatei = ""
             except ValueError:
                 print("Datei Format ist nicht .wav!")
-                break
+                eingabeDatei = ""
             except:
                 print("Das lief schief! Versuch es noch mal, vielleicht mit einer anderen Datei!")
-                break
+                eingabeDatei = ""
 
 
+
+        # Preset für showcase, feste Datei & IR
+        elif eingabeDatei.upper() == "P":
+            zuFaltendeDatei = file.setUp('WiiShopChannel.wav')
+            impulsAntwort = file.setUp('big_hall.wav')
+        else:
+            print("Sie haben keinen gültigen Buchstaben eingegeben!")
+
+        if eingabeDatei.upper() == "E":
             # Auswahl ob Preset-Hall oder eigener
             while eingabeHall.upper() != "E" and eingabeHall.upper() != "P":
 
@@ -49,27 +57,28 @@ if __name__ == '__main__':
                     "Möchtest du eine eigene Impulsantwort nutzen oder das bereits vorhandene Preset? "
                     "(P = Presets / E = Eigene) \nBitte Wahl eintippen: ")
 
-
                 # Eigene IR
                 if eingabeHall.upper() == "E":
                     print("Wähle eine Datei für die Impulsantwort aus")
                     try:
                         impulsAntwort = file.setUp(functions.select_file())
+
                     except FileNotFoundError:
                         print("Datei konnte nicht gefunden werden!")
-                        break
+                        eingabeHall = ""
                     except ValueError:
                         print("Datei Format ist nicht .wav!")
-                        break
+                        eingabeHall = ""
                     except:
                         print("Das lief schief! Versuch es noch mal, vielleicht mit einer anderen Datei!")
+                        eingabeHall = ""
 
 
                 # Preset IR
-                elif eingabeIR.upper() == "P":
+                elif eingabeHall.upper() == "P":
 
                     # Auswahl zwischen Presets
-                    while eingabeIR != "1" and eingabeIR != "2":
+                    while eingabeIR.upper() != "1" and eingabeIR.upper() != "2":
                         eingabeIR = input(
                             "Wähle ein Preset. Preset 1 (classroom.wav) = 1, Preset 2 (big_hall.wav) = 2 "
                             "\nBitte Wahl eintippen: ")
@@ -82,13 +91,6 @@ if __name__ == '__main__':
                             print("Sie haben keine gültige Zahl eingegeben!")
                 else:
                     print("Sie haben keinen gültigen Buchstaben eingegeben!")
-
-                # Preset für showcase, feste Datei & IR
-        elif eingabeDatei.upper() == "P":
-            zuFaltendeDatei = file.setUp('WiiShopChannel.wav')
-            impulsAntwort = file.setUp('big_hall.wav')
-        else:
-            print("Sie haben keinen gültigen Buchstaben eingegeben!")
 
     # Faltung soll mit 2 Mono Dateien geschehen
     zuFaltendeDatei.makeMono()
