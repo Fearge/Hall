@@ -31,13 +31,13 @@ if __name__ == '__main__':
                 zuFaltendeDatei = file.setUp(functions.select_file())
 
             except FileNotFoundError:
-                print("Datei konnte nicht gefunden werden!")
+                print("Datei konnte nicht gefunden werden!\nVersuch es noch einmal\n+----------------------------------+")
                 eingabeDatei = ""
             except ValueError:
-                print("Datei Format ist nicht .wav!")
+                print("Datei Format ist nicht .wav!\nVersuch es noch einmal\n+----------------------------------")
                 eingabeDatei = ""
             except:
-                print("Das lief schief! Versuch es noch mal, vielleicht mit einer anderen Datei!")
+                print("Das lief schief! Versuch es noch mal, vielleicht mit einer anderen Datei!\nVersuch es noch einmal\n+----------------------------------+")
                 eingabeDatei = ""
 
 
@@ -64,13 +64,13 @@ if __name__ == '__main__':
                         impulsAntwort = file.setUp(functions.select_file())
 
                     except FileNotFoundError:
-                        print("Datei konnte nicht gefunden werden!")
+                        print("Datei konnte nicht gefunden werden!\nVersuch es noch einmal\n+----------------------------------+")
                         eingabeHall = ""
                     except ValueError:
-                        print("Datei Format ist nicht .wav!")
+                        print("Datei Format ist nicht .wav!\nVersuch es noch einmal\n+----------------------------------+")
                         eingabeHall = ""
                     except:
-                        print("Das lief schief! Versuch es noch mal, vielleicht mit einer anderen Datei!")
+                        print("Das lief schief! Versuch es noch mal, vielleicht mit einer anderen Datei!\nVersuch es noch einmal\n+----------------------------------+")
                         eingabeHall = ""
 
 
@@ -88,9 +88,9 @@ if __name__ == '__main__':
                         elif eingabeIR == "2":
                             impulsAntwort = file.setUp('big_hall.wav')
                         else:
-                            print("Sie haben keine gültige Zahl eingegeben!")
+                            print("Sie haben keine gültige Zahl eingegeben!\nVersuch es noch einmal\n+----------------------------------+")
                 else:
-                    print("Sie haben keinen gültigen Buchstaben eingegeben!")
+                    print("Sie haben keinen gültigen Buchstaben eingegeben!\nVersuch es noch einmal\n+----------------------------------+")
 
     # Faltung soll mit 2 Mono Dateien geschehen
     zuFaltendeDatei.makeMono()
@@ -112,7 +112,7 @@ if __name__ == '__main__':
         elif eingabeShow.upper() == "N":
             pass
         else:
-            print("Sie haben keinen gültigen Buchstaben eingegeben!")
+            print("Sie haben keinen gültigen Buchstaben eingegeben!\nVersuch es noch einmal\n+----------------------------------+")
 
     # Ausgabe, entweder als .wav Datei oder über Soundkarte
 
@@ -126,13 +126,13 @@ if __name__ == '__main__':
             try:
                 functions.ausgabe(gefalteteDatei, 1)
             except:
-                print("Datei konnte nicht gespeichert werden!")
+                print("Datei konnte nicht gespeichert werden!\nVersuch es noch einmal\n+----------------------------------+")
 
         # über Soundkarte
         elif eingabeAusgabe.upper() == "A":
             try:
                 functions.ausgabe(gefalteteDatei, 0)
             except:
-                print("Datei konnte nicht abgespielt werden!")
+                print("Datei konnte nicht abgespielt werden!\nVersuch es noch einmal\n+----------------------------------+")
         else:
-            print("Sie haben keinen gültigen Buchstaben eingegeben!")
+            print("Sie haben keinen gültigen Buchstaben eingegeben!\nVersuch es noch einmal\n+----------------------------------+")
