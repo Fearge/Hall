@@ -27,6 +27,7 @@ if __name__ == '__main__':
             try:
                 zuFaltendeDatei = file.setUp(functions.select_file())
                 eingabeFlag = ""
+
             except FileNotFoundError:
                 print("Datei konnte nicht gefunden werden!")
             except ValueError:
@@ -36,6 +37,7 @@ if __name__ == '__main__':
 
             # Auswahl ob Preset-Hall oder eigener
             while eingabeFlag.upper() != "E" and eingabeFlag.upper() != "P":
+
                 eingabeFlag = input(
                     "Möchtest du eine eigene Impulsantwort nutzen oder das bereits vorhandene Preset? "
                     "(P = Presets / E = Eigene) \nBitte Wahl eintippen: ")

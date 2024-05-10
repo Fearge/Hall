@@ -15,12 +15,11 @@ import file
 # Methode zum Falten
 def convolve(file1, file2):
     assert (file1.rate == file2.rate)
-
     # Faltung
     gefaltet = signal.fftconvolve(file1.content, file2.content)
 
-    gefaltet = file.File(file1.rate, gefaltet,file1.name + '_gefaltet')
-    return gefaltet
+    gefaltetFile = file.File(file1.rate, gefaltet,file1.name + '_gefaltet')
+    return gefaltetFile
 
 
 # Ergebnis ausgeben, entweder auf Soundkarte oder als .wav Datei
