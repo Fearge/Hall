@@ -1,6 +1,8 @@
 #eigene Funktionen
 import functions
 
+#:)))))))
+
 sampleRate = 44100
 zuFaltendeDatei = ""
 impulsAntwort = ""
